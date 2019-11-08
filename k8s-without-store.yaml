@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-session-hazelcast-deployment-without-store
+  labels:
+    app: express-session-hazelcast-without-store
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: express-session-hazelcast-without-store
+  template:
+    metadata:
+      labels:
+        app: express-session-hazelcast-without-store
+    spec:
+      containers:
+        - name: express-session-hazelcast-without-store
+          image: huseyinbabal/express-session-hazelcast
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: express-session-hazelcast-without-store-service
+spec:
+  selector:
+    app: express-session-hazelcast-without-store
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: NodePort
