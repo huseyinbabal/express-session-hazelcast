@@ -12,28 +12,19 @@ const app = express();
 app.set('views', path.join(__dirname,'/','views'));
 app.engine('html', require('ejs').renderFile);
 
-if (process.env.HZ_STORE_ENABLED) {
-    app.use(session({
-        secret: 'session_secret',
-        saveUninitialized: false,
-        resave: false,
-        name: 'hazelcast_cloud',
-        store: new HazelcastStore({
-            discoveryEnabled: true,
-            discoveryToken: process.env.HZ_CLOUD_DISCOVERY_TOKEN,
-            groupName: process.env.HZ_CLOUD_GROUP_NAME,
-            groupPassword: process.env.HZ_CLOUD_PASSWORD,
-            prefix: "hz_sessions"
-        })
-    }));
-} else {
-    app.use(session({
-        secret: 'session_secret',
-        name: 'hazelcast_cloud',
-        saveUninitialized: false,
-        resave: false,
-    }));
-}
+app.use(session({
+    secret: 'session_secret',
+    saveUninitialized: false,
+    resave: false,
+    name: 'hazelcast_cloud',
+    store: new HazelcastStore({
+        discoveryEnabled: true,
+        discoveryToken: process.env.HZ_CLOUD_DISCOVERY_TOKEN,
+        groupName: process.env.HZ_CLOUD_GROUP_NAME,
+        groupPassword: process.env.HZ_CLOUD_PASSWORD,
+        prefix: "hz_sessions"
+    })
+}));
 
 app.use(cookieParser("cookie_secret"));
 app.use(bodyParser.urlencoded({extended: false}));

@@ -1,6 +1,4 @@
-### Express Session Hazelcast
-
-Demo project implemented during live coding on [webinar](https://www.meetup.com/DevOps-Underground/events/265833438/)
+# Express Session Hazelcast
 
 You can access presentation [here](https://bit.ly/hazelcast-cloud-session)
 
